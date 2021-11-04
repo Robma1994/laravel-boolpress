@@ -14,6 +14,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.admin'); //perchè abbiamo creato la vista con la cartella admin
+        return view('admin.home'); //perchè abbiamo creato la vista con la cartella admin
     }
 }
