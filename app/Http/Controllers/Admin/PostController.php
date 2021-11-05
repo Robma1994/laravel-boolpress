@@ -80,24 +80,47 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        if(!$post) {
+            abort(404);
+        }
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $form_data = $request->all();
+        //Il titolo è diverso da quello che c'era 'precedentemente? 
+        //Se si, devi modificare anche lo slug che è strettamente legato al title.
+        if($form_data != $post->title) {
+            $slug = Str::slug($form_data['title'], '-');
+            //Where('nomecolonna', valore colonna)
+            $slug_exist = Post::where('slug', $slug)->first();
+            //il ciclo inizia se lo slug è gia presente
+            $i= 1;
+            while($slug_exist) {
+                $slug = $slug . '-' . $i;
+                $slug_exist = Post::where('slug', $slug)->first();
+                $i++;
+            }
+            /*
+                Dobbiamo inviare il nuovo slug, quindi bisogna assegnare la proprietà slug
+            */
+            $form_data['slug'] = $slug;
+        }
+        $post->update($form_data);
+        return redirect()->route('admin.posts.index')->with('modified', 'Il record è stato modificato correttamente');
     }
 
     /**

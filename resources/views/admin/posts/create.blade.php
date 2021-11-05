@@ -4,6 +4,7 @@
     <form action="{{ route('admin.posts.store')}}" method="POST">
         @csrf
         @method('POST')
+        <h1>Create Post</h1>
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" name="title" class="form-control" id="title" placeholder="Add Title">
