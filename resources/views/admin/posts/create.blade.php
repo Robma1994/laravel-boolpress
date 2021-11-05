@@ -10,7 +10,7 @@
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content</label>
-            <input type="text" name="content" class="form-control" id="content" placeholder="Add content">
+            <textarea name="content" class="form-control" id="content" placeholder="Add content"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
