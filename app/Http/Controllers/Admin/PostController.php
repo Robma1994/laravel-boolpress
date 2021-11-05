@@ -38,6 +38,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        //prima validazione create
+        $request->validate([
+            "title" => "required|max:255",
+            'content' => "required"
+        ]);
+    
+
         $form_data = $request->all();
         $new_post = new Post();
         $new_post->fill($form_data);
@@ -100,6 +107,12 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        //prima validazione edit
+        $request->validate([
+            "title" => "required|max:255",
+            'content' => "required"
+        ]);
+        
         $form_data = $request->all();
         //Il titolo è diverso da quello che c'era 'precedentemente? 
         //Se si, devi modificare anche lo slug che è strettamente legato al title.
