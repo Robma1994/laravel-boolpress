@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', 'HomeController@index')->name('index'); 
+Route::resource('/posts', 'PostController'); 
+
 
 Auth::routes();
 
