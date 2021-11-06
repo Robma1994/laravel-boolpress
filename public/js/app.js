@@ -37270,6 +37270,17 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+var confirmDelete = document.querySelectorAll('.confirm-delete-post');
+confirmDelete.forEach(function (element) {
+  element.addEventListener('submit', function (e) {
+    var response = confirm('Vuoi cancellare il post?');
+
+    if (!response) {
+      e.preventDefault();
+    }
+  });
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
