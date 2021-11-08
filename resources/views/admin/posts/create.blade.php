@@ -26,7 +26,10 @@
             <select name="category_id" id="category_id" class="form-control">
                 <option value="">-- Select -- </option>
                 @foreach ($categories as $category) 
-                 <option value="{{$category->id}}"> {{$category['name']}} </option> 
+                 <option value="{{$category->id}}"
+                    {{-- ternario per introdurre la selected (questo è selezionato) --}}
+                    {{ old('category_id') == $category->id ? 'selected' : null }}
+                    >{{$category->name}} </option> 
                 @endforeach
             </select>
 

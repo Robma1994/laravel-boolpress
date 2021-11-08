@@ -46,7 +46,9 @@ class PostController extends Controller
         //prima validazione create
         $request->validate([
             "title" => "required|max:255",
-            'content' => "required"
+            'content' => "required",
+            //L'id che mi hai appena passato, nella tabella categories esiste? 
+            'category_id' => 'nullable|exists:categories,id'
         ]);
     
 
