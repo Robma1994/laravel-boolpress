@@ -19,6 +19,18 @@
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="mb-3">
+            <label for="category_id" class="form-label">Categories</label>
+            <select name="category_id" id="category_id" class="form-control">
+                <option value="">-- Select -- </option>
+                @foreach ($categories as $category) 
+                 <option value="{{$category->id}}"
+                    {{-- ternario per introdurre la selected (questo è selezionato) --}}
+                    {{ old('category_id', $post->category_id) == $category->id ? 'selected' : null }}
+                    >{{$category->name}} </option> 
+                @endforeach
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
