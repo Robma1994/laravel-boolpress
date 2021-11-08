@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Post;
+use App\Category;
 
 class PostController extends Controller
 {
@@ -27,7 +28,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        //Prendiamo tutte le categorie presenti sul DB e le inserisco in una variabile
+        //Variabile = Oggetto::metodoAll()
+        $categories = Category::all();
+        //Oltre a passare la vista, passeremo la variabile che conterrà al suo interno un array di tutte le categorie
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
