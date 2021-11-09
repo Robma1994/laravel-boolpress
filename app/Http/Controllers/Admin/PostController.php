@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Post;
 use App\Category;
-
+use App\Tag;
 class PostController extends Controller
 {
     /**
@@ -31,8 +31,9 @@ class PostController extends Controller
         //Prendiamo tutte le categorie presenti sul DB e le inserisco in una variabile
         //Variabile = Oggetto::metodoAll()
         $categories = Category::all();
+        $tags = Tag::all();
         //Oltre a passare la vista, passeremo la variabile che conterrà al suo interno un array di tutte le categorie
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -48,7 +49,9 @@ class PostController extends Controller
             "title" => "required|max:255",
             'content' => "required",
             //L'id che mi hai appena passato, nella tabella categories esiste? 
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            //tags esiste nella tabella tags e nello specifico nella colonna id?
+            'tags' => 'exists:tags,id'
         ]);
     
 
@@ -74,6 +77,7 @@ class PostController extends Controller
 
         $new_post->slug = $slug;
         $new_post->save();
+        $new_post->tags()->attach($form_data['tags']);
         return redirect()->route('admin.posts.index')->with('inserted', 'Il record è stato salvato correttamente');
     }
 

@@ -32,9 +32,17 @@
                     >{{$category->name}} </option> 
                 @endforeach
             </select>
-
         </div>
-
+        <div class="mb-3">
+            <p>Seleziona i tag</p>
+            @foreach ($tags as $tag)
+                <div class="form-check form-check-inline">
+                    <input value="{{ $tag['id'] }}" id="{{ 'tag' . $tag['id'] }}" type="checkbox" name="tags[]" class="form-check-input">
+                    <label for="{{ 'tag' . $tag['id'] }}" class="form-check-label">{{ $tag['name'] }}</label>
+                </div>
+            @endforeach
+            
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
