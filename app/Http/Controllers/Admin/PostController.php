@@ -156,6 +156,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        //Se non avessimo utilizzato onDelate('cascade') all'interno della migration, potevamo utilizzare il metodo detach()
+        //$post->tags()->detach($post->id);
         $post->delete();
         return redirect()->route('admin.posts.index');
     }

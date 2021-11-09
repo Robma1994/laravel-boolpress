@@ -20,12 +20,12 @@ class CreatePostTagTable extends Migration
             $table->unsignedBigInteger('post_id');
             //La colonna creata ('post_id') sarà:
             //una foreign key(post_id) con referenza la colonna 'id' della table Categories
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
 
             $table->unsignedBigInteger('tag_id');
             //La colonna creata ('tag_id') sarà:
             //una foreign key(tag_id) con referenza la colonna 'id' della table Categories
-            $table->foreign('tag_id')->references('id')->on('tags');
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
 
 
         });
