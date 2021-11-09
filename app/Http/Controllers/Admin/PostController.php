@@ -123,7 +123,9 @@ class PostController extends Controller
         //prima validazione edit
         $request->validate([
             "title" => "required|max:255",
-            'content' => "required"
+            'content' => "required",
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'exists:tags,id'
         ]);
         
         $form_data = $request->all();
@@ -146,7 +148,13 @@ class PostController extends Controller
             $form_data['slug'] = $slug;
         }
         $post->update($form_data);
-        return redirect()->route('admin.posts.index')->with('modified', 'Il record è stato modificato correttamente');
+        if(array_key_exists('tag', $form_data)) {
+            $post->tags()->sync($form_data['tags']);
+        } else {
+            $post->tags()->sync([]);
+        }
+
+        return redirect()->route('admin.posts.index')->with('updated', 'Il record è stato modificato correttamente');
     }
 
     /**
@@ -158,7 +166,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //Se non avessimo utilizzato onDelate('cascade') all'interno della migration, potevamo utilizzare il metodo detach()
-        //$post->tags()->detach($post->id);
+        $post->tags()->detach();
         $post->delete();
         return redirect()->route('admin.posts.index');
     }
